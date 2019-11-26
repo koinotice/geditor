@@ -1,0 +1,38 @@
+// Copyright 2019 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+import { from } from 'rxjs';
+import {switchMap, withLatestFrom, catchError, mergeMap} from 'rxjs/operators';
+import { ofType, Epic } from 'redux-observable';
+import { projectsActions } from '../../actions';
+import { walletService } from '../../services';
+
+export const openWalletEpic: Epic = (action$: any, state$: any) => action$.pipe(
+    ofType(projectsActions.OPEN_WALLET),
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+        const isCustomNetworkSelected = state.projects.selectedEnvironment.name === 'custom';
+
+        const walletName = action.data.name;
+        return from(walletService.openWallet(walletName, action.data.seed, null))
+            .pipe(
+                mergeMap((wallet: any) => isCustomNetworkSelected
+                    ? [projectsActions.openWalletSuccess(walletName, wallet.addresses), projectsActions.setEnvironment('custom')]
+                    : [projectsActions.openWalletSuccess(walletName, wallet.addresses)]),
+                catchError(err => [projectsActions.openWalletFail(err)])
+            );
+    })
+);

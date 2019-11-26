@@ -1,0 +1,10 @@
+node_modules
+build
+dist
+*.log
+.idea
+*.iml
+*/**/openzeppelin.json
+*/**/templates/*
+.vscode
+!templates/**

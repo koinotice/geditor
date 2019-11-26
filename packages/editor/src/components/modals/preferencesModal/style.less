@@ -1,0 +1,88 @@
+// Copyright 2018 Superblocks AB
+//
+// This file is part of Superblocks Lab.
+//
+// Superblocks Lab is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// Superblocks Lab is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Superblocks Lab.  If not, see <http://www.gnu.org/licenses/>.
+
+@import '../../../style/index';
+
+.preferencesModal {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    background-color: @modal-background-color;
+    color: #fff;
+    max-width: 100%;
+
+    h2 {
+        margin-top: 0;
+    }
+
+    .area {
+        display: flex;
+        overflow: auto;
+    }
+    .container {
+        max-width: 100%;
+        width: 750px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        .categoriesArea {
+            width: 25%;
+            min-width: 170px;
+            border-right: 1px solid @modal-separator-color;
+            .categoriesContainer {
+                margin-top: 15px;
+                ul {
+                    list-style-type: none;
+                    margin: 0;
+                    padding: 0;
+                    color: #c7c7c7;
+                    li {
+                        line-height: 40px;
+                        padding: 0 20px;
+                        border-left: 2px solid transparent;
+                        &:hover {
+                            background-color: @primary-color-light-hover;
+                            border-color: @primary-color;
+                            cursor: pointer;
+                        }
+                    }
+                    .selected {
+                        background-color: @modal-selected-color;
+                        color: black;
+                        &:hover {
+                            background-color: @modal-selected-color;
+                            border-color: transparent;
+                        }
+                    }
+                }
+            }
+        }
+        .preferencesArea {
+            width: 80%;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+    }
+    .footer {
+        display: flex;
+        border-top: 1px solid @modal-separator-color;
+        .buttonsContainer {
+            margin-left: auto;
+            padding: 15px 20px;
+        }
+    }
+}
